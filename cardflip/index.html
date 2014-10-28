@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Polymer &lt;flip-card&gt; demo</title>
+  <meta name="description" content="A demo of CSS 3D flip cards using Polymer, the Web Components polyfill.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="demo.css">
+  <script src="platform.js"></script>
+  <link rel="import" href="flip-card.html">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+   <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body unresolved>
+  
+    
+
+    <flip-card onclick="rotate()">
+      <front>
+		<div id="cardData">
+			103 minutes this week
+			<hr/>
+			<table  width="100%;" height="100%;">
+			
+			
+				<tr >
+					
+					<td><img src="./images/run.png"> </img> </td>
+					<td> 43 minutes </td>
+				</tr>
+				<tr>
+					
+					<td><img src="./images/swim.png"> </img> </td>
+					<td> 34 minutes </td>
+				</tr>
+				<tr>
+					
+					<td><img src="./images/cycle.png"> </img> </td>
+					<td> 26 minutes </td>
+				</tr>
+				
+			</table>
+		</div>
+	  </front>
+      <back>
+		<div id="container" style="width: 250px; height: 300px; margin: 0 auto;"></div>
+	  </back>
+    </flip-card>
+	
+	
+	
+
+    <br>
+
+	<!--
+    <flip-card axis="x">
+      <front>X axis</front>
+      <back>Howdy!</back>
+    </flip-card>
+	-->
+
+
+<script type="text/javascript">
+
+
+	
+	$(function () {
+
+    $(document).ready(function () {
+
+        // Build the chart
+        $('#container').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Weekly Activity Breakdown'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Weekly Activity Breakdown',
+                data: [
+                    ['Running',   43.0],
+                    ['Swimming',  34.0],
+                    ['Cycling',   26.0]
+                ]
+            }]
+        });
+    });
+
+});
+</script>
+	
+  
+
+  
+
+</body>
+</html>
