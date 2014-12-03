@@ -1,0 +1,1670 @@
+
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!doctype html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+  <title>Integrated</title>
+
+  <script src="https://www.polymer-project.org/components/webcomponentsjs/webcomponents.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+ 
+  
+  <link href="https://www.polymer-project.org/components/font-roboto/roboto.html" rel="import">
+  <link href="https://www.polymer-project.org/components/paper-button/paper-button.html" rel="import">
+  <link href="https://www.polymer-project.org/components/paper-dialog/paper-dialog.html" rel="import">
+  <link href="https://www.polymer-project.org/components/paper-dialog/paper-action-dialog.html" rel="import">
+  <link rel="import" href="https://www.polymer-project.org/components/font-roboto/roboto.html">
+  <link rel="import" href="https://www.polymer-project.org/components/paper-tabs/paper-tabs.html">
+  <link rel="import" href="https://www.polymer-project.org/components/core-pages/core-pages.html">
+  <link rel="import" href="https://www.polymer-project.org/components/core-icons/core-icons.html">
+  <link rel="import" href="https://www.polymer-project.org/components/core-icons/maps-icons.html">
+  <link rel="import" href="https://www.polymer-project.org/components/core-icons/social-icons.html">
+  <link rel="import" href="https://www.polymer-project.org/components/core-selector/core-selector.html">
+  <link rel="import" href="https://www.polymer-project.org/components/paper-icon-button/paper-icon-button.html">
+  
+  
+
+  <style shim-shadowdom>
+    body {
+      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+      font-size: 14px;
+      margin: 0;
+      padding: 24px;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-touch-callout: none;
+    }
+
+    section {
+      padding: 20px 0;
+    }
+
+    section > div {
+      padding: 14px;
+      font-size: 16px;
+    }
+
+    button {
+      margin: 8px 4px;
+    }
+
+    html /deep/ [autofocus] {
+      color: #03a9f4;
+    }
+
+    html /deep/ .scrolling::shadow #scroller {
+      height: 350px;
+    }
+
+    html /deep/ .colored {
+      border: 1px solid #0f9d58;
+      background-color: #b7e1cd;
+      color: #0f9d58;
+    }
+
+    html /deep/ .size-position {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+    }
+
+    html /deep/ paper-dialog::shadow #scroller {
+      width: 700px;
+      height: 700px;
+    }
+	
+	html /deep/ paper-tabs{
+      background-color: #008BCB;
+      color: #fff;
+      box-shadow: 0px 3px 2px rgba(0, 0, 0, 0);
+	  font-size:20px;
+    }
+    
+   
+    
+    html /deep/ paper-tabs[noink][nobar] paper-tab.core-selected {
+      color: #000000;
+    }
+    
+    html /deep/ paper-tabs.transparent-teal {
+      background-color: transparent;
+      color: #00bcd4;
+      box-shadow: none;
+    }
+    
+    html /deep/ paper-tabs.transparent-teal::shadow #selectionBar {
+      background-color: #00bcd4;
+    }
+    
+    html /deep/ paper-tabs.transparent-teal paper-tab::shadow #ink {
+      color: #00bcd4;
+    }
+	
+	.flip {
+  -webkit-perspective: 800;
+   width: 400px;
+   height: 200px;
+    position: relative;
+    margin: 50px auto;
+}
+.flip .card.flipped {
+  -webkit-transform: rotatex(-180deg);
+}
+.flip .card {
+  width: 100%;
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: 0.5s;
+}
+.flip .card .face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-backface-visibility: hidden ;
+  z-index: 2;
+    font-family: Georgia;
+    font-size: 3em;
+    text-align: center;
+    line-height: 200px;
+}
+.flip .card .front {
+  position: absolute;
+  z-index: 1;
+    background: #d6d6d6;
+    color: #008bcb;
+    cursor: pointer;
+}
+.flip .card .back {
+  -webkit-transform: rotatex(-180deg);
+    background: blue;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+	
+	
+	
+	
+	
+	
+
+  </style>
+
+<!--
+  <style>
+    body {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.87);
+    }
+
+    paper-dialog {
+      width: 50%;
+      min-width: 430px;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    paper-dialog paper-button {
+      font-weight: bold;
+    }
+
+    paper-button[autofocus] {
+      color: #4285f4;
+    }
+  </style>
+  -->
+</head>
+<body unresolved vertical layout onclick="clickAction(event);">
+
+	
+
+
+
+  
+  <section on-tap="toggleDialog2">
+  
+    <div class="flip"> 
+        <div class="card"> 
+            <div class="face front"> 
+                103 Minutes
+            </div> 
+            <div class="face back"> 
+                
+            </div> 
+        </div> 
+    </div> 
+
+	<!--<button transition="center" onclick="toggle()">center</button> -->
+	
+	<paper-dialog id="dialog2" transition="core-transition-center">
+		<!-- This is the title of the tabs on the page -->
+		<!-- This is the title of the tabs on the page -->
+		  <paper-tabs selected="0" noink>
+		  
+			<paper-tab>Last 7 days</paper-tab>
+			<paper-tab>Last 30 days</paper-tab>
+			<paper-tab>Last 90 days</paper-tab>
+			
+		  </paper-tabs>
+		  <core-pages flex>
+			
+			
+			<!-- Container for weekly -->
+			<div>
+				
+				<div id="container1" style="width: 500; height: 500; margin: 0 auto"> 
+					
+				</div>
+			</div>
+
+			<!-- Container for monthly -->
+			<div>
+				
+				<div id="container2" style="width: 500; height: 500; margin: 0 auto"> 
+					
+				</div>
+			</div>
+			
+			<!-- Container for 2 months -->
+			<div>
+				
+				<div id="container3" style="width: 500; height: 500; margin: 0 auto"> 
+					
+				</div>
+			</div>
+		</core-pages>
+		  
+		  
+		  
+    </paper-dialog>
+	
+
+    
+
+    
+
+  </section>
+
+
+  
+
+
+
+<script>
+
+	function toggle(){
+		document.getElementById('dialog2').toggle();
+	}
+
+
+</script>
+
+
+<script style="text/javascript">
+
+$('.flip').click(function(){
+	   /*
+        $(this).find('.card').addClass('flipped').mouseleave(function(){
+            $(this).removeClass('flipped');
+        });
+        return false;
+		*/
+		toggle();
+    });
+   
+   /* Dummy data */
+	var data = {
+		activityData: [
+		{
+			"date": Date.UTC(2014,  9, 1),
+			"goal":10,
+			"active":10
+		},
+		{
+			"date": Date.UTC(2014,  9, 2),
+			"goal":10,
+			"active":12
+		},
+		{
+			"date": Date.UTC(2014,  9, 3),
+			"goal":10,
+			"active":13
+		},
+		{
+			"date": Date.UTC(2014,  9, 4),
+			"goal":10,
+			"active":15
+		},
+		{
+			"date": Date.UTC(2014,  9, 5),
+			"goal":10,
+			"active":15
+		},
+		{
+			"date": Date.UTC(2014,  9, 6),
+			"goal":10,
+			"active":12
+		},
+		{
+			"date": Date.UTC(2014,  9, 7),
+			"goal":15,
+			"active":14
+		},
+		{
+			"date": Date.UTC(2014,  9, 8),
+			"goal":15,
+			"active":16
+		},
+		{
+			"date": Date.UTC(2014,  9, 9),
+			"goal":15,
+			"active":16
+		},
+		{
+			"date": Date.UTC(2014,  9, 10),
+			"goal":15,
+			"active":17
+		},
+		{
+			"date": Date.UTC(2014,  9, 11),
+			"goal":15,
+			"active":14
+		},
+		{
+			"date": Date.UTC(2014,  9, 12),
+			"goal":15,
+			"active":13
+		},
+		{
+			"date": Date.UTC(2014,  9, 13),
+			"goal":15,
+			"active":15
+		},
+		{
+			"date": Date.UTC(2014,  9, 14),
+			"goal":15,
+			"active":16
+		},
+		{
+			"date": Date.UTC(2014,  9, 15),
+			"goal":15,
+			"active":14
+		},
+		{
+			"date": Date.UTC(2014,  9, 16),
+			"goal":15,
+			"active":20
+		},
+		{
+			"date": Date.UTC(2014,  9, 17),
+			"goal":15,
+			"active":22
+		},
+		{
+			"date": Date.UTC(2014,  9, 18),
+			"goal":15,
+			"active":19
+		},
+		{
+			"date": Date.UTC(2014,  9, 19),
+			"goal":15,
+			"active":18
+		},
+		{
+			"date": Date.UTC(2014,  9, 20),
+			"goal":25,
+			"active":22
+		},
+		{
+			"date": Date.UTC(2014,  9, 21),
+			"goal":25,
+			"active":20
+		},
+		{
+			"date": Date.UTC(2014,  9, 22),
+			"goal":25,
+			"active":21
+		},
+		{
+			"date": Date.UTC(2014,  9, 23),
+			"goal":25,
+			"active":23
+		},
+		{
+			"date": Date.UTC(2014,  9, 24),
+			"goal":25,
+			"active":24
+		},
+		{
+			"date": Date.UTC(2014,  9, 25),
+			"goal":25,
+			"active":24
+		},
+		{
+			"date": Date.UTC(2014,  9, 26),
+			"goal":25,
+			"active":22
+		},
+		{
+			"date": Date.UTC(2014,  9, 27),
+			"goal":25,
+			"active":20
+		},
+		{
+			"date": Date.UTC(2014,  9, 28),
+			"goal":20,
+			"active":20
+		},
+		{
+			"date": Date.UTC(2014,  9, 29),
+			"goal":20,
+			"active":21
+		},
+		{
+			"date": Date.UTC(2014,  9, 30),
+			"goal":20,
+			"active":24
+		},
+		{
+			"date": Date.UTC(2014,  10, 1),
+			"goal":20,
+			"active":26
+		},
+		{
+			"date": Date.UTC(2014,  10, 2),
+			"goal":20,
+			"active":23
+		},
+		{
+			"date": Date.UTC(2014,  10, 3),
+			"goal":20,
+			"active":19
+		},
+		{
+			"date": Date.UTC(2014,  10, 4),
+			"goal":20,
+			"active":30
+		},
+		{
+			"date": Date.UTC(2014,  10, 5),
+			"goal":25,
+			"active":24
+		},
+		{
+			"date": Date.UTC(2014,  10, 6),
+			"goal":25,
+			"active":25
+		},
+		{
+			"date": Date.UTC(2014,  10, 7),
+			"goal":25,
+			"active":25
+		},
+		{
+			"date": Date.UTC(2014,  10, 8),
+			"goal":25,
+			"active":23
+		},
+		{
+			"date": Date.UTC(2014,  10, 9),
+			"goal":25,
+			"active":29
+		},
+		{
+			"date": Date.UTC(2014,  10, 10),
+			"goal":25,
+			"active":26
+		},
+		{
+			"date": Date.UTC(2014,  10, 11),
+			"goal":25,
+			"active":27
+		},
+		{
+			"date": Date.UTC(2014,  10, 12),
+			"goal":30,
+			"active":29
+		},
+		{
+			"date": Date.UTC(2014,  10, 13),
+			"goal":30,
+			"active":29
+		},
+		{
+			"date": Date.UTC(2014,  10, 14),
+			"goal":30,
+			"active":31
+		},
+		{
+			"date": Date.UTC(2014,  10, 15),
+			"goal":30,
+			"active":33
+		},
+		{
+			"date": Date.UTC(2014,  10, 16),
+			"goal":30,
+			"active":32
+		},
+		{
+			"date": Date.UTC(2014,  10, 17),
+			"goal":30,
+			"active":30
+		},
+		{
+			"date": Date.UTC(2014,  10, 18),
+			"goal":30,
+			"active":35
+		},
+		{
+			"date": Date.UTC(2014,  10, 19),
+			"goal":30,
+			"active":32
+		},
+		{
+			"date": Date.UTC(2014,  10, 20),
+			"goal":30,
+			"active":31
+		},
+		{
+			"date": Date.UTC(2014,  10, 21),
+			"goal":30,
+			"active":34
+		},
+		{
+			"date": Date.UTC(2014,  10, 22),
+			"goal":30,
+			"active":15
+		},
+		{
+			"date": Date.UTC(2014,  10, 23),
+			"goal":30,
+			"active":33
+		},
+		{
+			"date": Date.UTC(2014,  10, 24),
+			"goal":35,
+			"active":35
+		},
+		{
+			"date": Date.UTC(2014,  10, 25),
+			"goal":35,
+			"active":36
+		},
+		{
+			"date": Date.UTC(2014,  10, 26),
+			"goal":35,
+			"active":34
+		},
+		{
+			"date": Date.UTC(2014,  10, 27),
+			"goal":35,
+			"active":38
+		},
+		{
+			"date": Date.UTC(2014,  10, 28),
+			"goal":35,
+			"active":39
+		},
+		{
+			"date": Date.UTC(2014,  10, 29),
+			"goal":35,
+			"active":37
+		},
+		{
+			"date": Date.UTC(2014,  10, 30),
+			"goal":40,
+			"active":39
+		},
+		{
+			"date": Date.UTC(2014,  10, 31),
+			"goal":40,
+			"active":39
+		},
+		{
+			"date": Date.UTC(2014,  11, 1),
+			"goal":40,
+			"active":41
+		},
+		{
+			"date": Date.UTC(2014,  11, 2),
+			"goal":40,
+			"active":41
+		},
+		{
+			"date": Date.UTC(2014,  11, 3),
+			"goal":40,
+			"active":44
+		},
+		{
+			"date": Date.UTC(2014,  11, 4),
+			"goal":40,
+			"active":43
+		},
+		{
+			"date": Date.UTC(2014,  11, 5),
+			"goal":45,
+			"active":42
+		},
+		{
+			"date": Date.UTC(2014,  11, 6),
+			"goal":45,
+			"active":40
+		},
+		{
+			"date": Date.UTC(2014,  11, 7),
+			"goal":45,
+			"active":20
+		},
+		{
+			"date": Date.UTC(2014,  11, 8),
+			"goal":45,
+			"active":26
+		},
+		{
+			"date": Date.UTC(2014,  11, 9),
+			"goal":45,
+			"active":49
+		},
+		{
+			"date": Date.UTC(2014,  11, 10),
+			"goal":45,
+			"active":50
+		},
+		{
+			"date": Date.UTC(2014,  11, 11),
+			"goal":45,
+			"active":43
+		},
+		{
+			"date": Date.UTC(2014,  11, 12),
+			"goal":45,
+			"active":44
+		},
+		{
+			"date": Date.UTC(2014,  11, 13),
+			"goal":45,
+			"active":49
+		},
+		{
+			"date": Date.UTC(2014,  11, 14),
+			"goal":50,
+			"active":49
+		},
+		{
+			"date": Date.UTC(2014,  11, 15),
+			"goal":50,
+			"active":49
+		},
+		{
+			"date": Date.UTC(2014,  11, 16),
+			"goal":50,
+			"active":51
+		},
+		{
+			"date": Date.UTC(2014,  11, 17),
+			"goal":50,
+			"active":56
+		},
+		{
+			"date": Date.UTC(2014,  11, 18),
+			"goal":50,
+			"active":53
+		},
+		{
+			"date": Date.UTC(2014,  11, 19),
+			"goal":50,
+			"active":54
+		},
+		{
+			"date": Date.UTC(2014,  11, 20),
+			"goal":50,
+			"active":52
+		},
+		{
+			"date": Date.UTC(2014,  11, 21),
+			"goal":50,
+			"active":57
+		},
+		{
+			"date": Date.UTC(2014,  11, 22),
+			"goal":50,
+			"active":53
+		},
+		{
+			"date": Date.UTC(2014,  11, 23),
+			"goal":50,
+			"active":49
+		},
+		{
+			"date": Date.UTC(2014,  11, 24),
+			"goal":50,
+			"active":54
+		},
+		{
+			"date": Date.UTC(2014,  11, 25),
+			"goal":50,
+			"active":52
+		},
+		{
+			"date": Date.UTC(2014,  11, 26),
+			"goal":50,
+			"active":51
+		},
+		{
+			"date": Date.UTC(2014,  11, 27),
+			"goal":50,
+			"active":56
+		},
+		{
+			"date": Date.UTC(2014,  11, 28),
+			"goal":50,
+			"active":49
+		},
+		{
+			"date": Date.UTC(2014,  11, 29),
+			"goal":50,
+			"active":51
+		}
+		
+	]
+};
+console.log(data.activityData.length);
+
+	
+
+   //chart 1 is the chart for weekly
+   //chart 2 is the chart for monthly//
+   //chart 3 is the chart for 3 months
+   
+   /*
+	draw1(),draw2(),draw3() functions correspond to the weekly, monthly and 3 months graphs respectively. 
+	refresh1(),refresh2() and refresh 3 correspond to the daily view for the weekly, monthly and 3 months graphs respectively
+   
+   
+   
+   */
+   var chart1;
+   var chart2;
+   var chart3;
+   function refresh1(date) {
+		// hourly view for weekly data point
+		var selectedDate = new Date(date).toISOString();;
+		var startTime = new Date(selectedDate);
+		startTime =   new Date( startTime.getTime() + ( startTime.getTimezoneOffset() * 60000 ) );
+		
+		var toDisplay = startTime.toString().substring(0,10);
+		toDisplay = [toDisplay.toString().slice(0, 3), ",", toDisplay.toString().slice(3)].join('');
+		//alert(toDisplay);
+		
+		
+		$('#container1').highcharts({
+        chart: {
+            zoomType: 'xy',
+			events: {
+				click: function(event) {
+					draw1();
+				}
+			}  
+        },
+		colors: [
+                '#008bcb'
+        ],
+        title: {
+            text: 'Your daily activity by hour for date'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: [{
+            categories: ['0', ' ', '3', ' ', '6', '',
+                '9', '', 'N', '', '3', '','6','','9','','M'],
+			 title: {
+                text: 'Time of Day',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }],
+        yAxis: [{ // Primary yAxis
+			gridLineWidth: 0,
+			tickInterval: 5,
+            minorGridLineWidth: 0,
+            labels: {
+                format: '{value}',
+                style: {
+                    color: "#008bcb"
+                }
+            },
+            title: {
+                text: 'Minutes',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }],
+        tooltip: {
+            enabled:false
+        },
+        legend: {
+		    enabled: false,
+            layout: 'vertical',
+            align: 'right',
+            x: 0,
+            verticalAlign: 'top',
+            y: 20,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+			itemStyle: {
+				fontSize: '20px'
+			}
+        },
+		plotOptions: {
+			 series: {
+                pointWidth: 50
+            },
+            column: {
+				dataLabels: {
+                    enabled: true,
+					color: '#008bcb',
+					formatter: function() {
+						if (this.y === 0) {
+						  return '';
+						}else {
+							return this.y;
+						}
+					}
+                },
+				states: {
+					hover: {
+						color: '#008bcb'                                                           
+					}
+				},
+				events: {
+							legendItemClick: function (e) {
+								e.preventDefault()
+							}
+				},
+				allowPointSelect: false,
+				series: {
+					point: {
+						events: {
+							legendItemClick: function (e) {
+								e.preventDefault()
+							}
+						}
+					},
+					
+					showInLegend: true
+				},
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function() {
+							
+                            draw1();
+                        },
+						legendItemClick:function(){
+							return false;
+						}
+						
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Minutes per hour',
+            type: 'column',
+			pointwidth:30,
+			animation: {
+                    duration: 2000
+            },
+            yAxis: 0,
+            data: [0, 3, 0, 5, 0, 10, 0, 12, 0, 10, 0, 12,0,10,0,5,0],
+            tooltip: {
+                valueSuffix: 'min'
+            },
+            marker: {
+                    enabled: false
+            }
+
+         }],
+	
+		});
+		chart1 = $('#container1').highcharts();
+		chart1.setTitle({text: "Your activity information for " + toDisplay });
+			
+    
+	}
+	
+	function draw1(){
+	//draw weekly graph
+	var goalData = [];
+	var activityData = [];
+	var datap = data.activityData;
+	//console.log(data);
+	console.log(datap.length);
+	for(var i=83;i<90;i++){
+		var todayGoal = [];
+		var todayActivity = [];
+		todayGoal.push(datap[i].date);
+		todayGoal.push(datap[i].goal);
+		goalData.push(todayGoal);
+		
+		todayActivity.push(datap[i].date);
+		todayActivity.push(datap[i].active);
+		activityData.push(todayActivity);
+		
+	}
+	
+	console.log(goalData);
+	console.log(activityData);
+	
+     $('#container1').highcharts({
+	
+        title: {
+            text: ''
+        },
+		 plotOptions: {
+            series: {
+                events: {
+                    legendItemClick: function() {
+                        return false;
+                    }    
+                },
+				animation: {
+                    duration: 2000
+                }
+            }
+        },
+		backgroundColor:'rgba(255, 255, 255, 0.1)',
+		
+        subtitle: {
+            text: ''
+        },
+		chart: {
+	        backgroundColor: 'rgba(0,0,0,0)'
+	    },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+                month: '%e. %b',
+                year: '%b'
+            },
+            title: {
+                text: 'Date'
+            },
+			 minTickInterval:  24 * 3600 * 1000,
+			 ordinal:false
+        },
+        yAxis: {
+			gridLineWidth: 0,
+			tickInterval: 5,
+			max:90,
+            minorGridLineWidth: 0,
+            title: {
+                text: 'Minutes of Activity in a day (minutes)'
+            },
+            min: 0
+        },
+		legend: {		
+           layout: 'horizontal',
+			margin: 40,
+            align: 'center',
+            x: 0,
+            verticalAlign: 'top',
+            y: 20,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+			itemStyle: {
+				color: '#000',
+				fontSize: '20px'
+			},
+			events: {
+							legendItemClick: function (e) {
+								e.preventDefault()
+							}
+				},
+			allowPointSelect: false,
+        },
+		tooltip: {
+			formatter: function() {
+            var s = [];
+
+            $.each(this.points, function(i, point) {
+                s.push('<span style="color:#008BCB;font-weight:bold;">' + point.series.name +' : '+
+                    point.y  +'<span>' + '\n');
+				console.log(s)
+				
+				
+            });
+			
+
+            return s.join(' , ');
+        },
+        shared: true
+        },
+        series: [
+		{
+			type: 'area',
+			ig : 'weekgoal',
+			name: 'Daily Goal',
+			color: '#d8d8d8',
+			fillOpacity: 0.3,	
+			marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: false
+                        }
+                    }
+            },
+			data: goalData
+		},
+		{
+        name: 'Minutes Active',
+		type: 'spline',
+	    cursor: 'pointer',
+	    point: {
+                    events: {
+                        click: function () {
+                           // alert('Date ' + Highcharts.dateFormat('%Y-%m-%d', this.x)+ ', index: ' + this.y);
+							refresh1(this.x);
+							
+                        },
+						 legendItemClick: function () {
+							return false; // <== returning false will cancel the default action
+						}
+                    },
+					allowPointSelect: false,
+            },
+            // Define the data points. All series have a dummy year
+            // of 1970/71 in order to be compared on the same x axis. Note
+            // that in JavaScript, months start at 0 for January, 1 for February etc.
+            data: activityData
+        }
+			
+      ]
+    });
+}
+
+function refresh2(date) {
+	//hourly view for the monthly data point
+			var selectedDate = new Date(date).toISOString();;
+		var startTime = new Date(selectedDate);
+		startTime =   new Date( startTime.getTime() + ( startTime.getTimezoneOffset() * 60000 ) );
+		
+		var toDisplay = startTime.toString().substring(0,10);
+		toDisplay = [toDisplay.toString().slice(0, 3), ",", toDisplay.toString().slice(3)].join('');
+		
+		
+		
+		
+		
+		$('#container2').highcharts({
+        chart: {
+            zoomType: 'xy',
+			events: {
+				click: function(event) {
+					draw2();
+				}
+			}  
+        },
+		colors: [
+                '#008bcb'
+        ],
+        title: {
+            text: 'Your daily activity by hour for date'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: [{
+			gridLineWidth: 0,
+            minorGridLineWidth: 0,
+            categories: ['0', ' ', '3', ' ', '6', '',
+                '9', '', 'N', '', '3', '','6','','9','','M'],
+			title: {
+                text: 'Time of Day',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+			}
+        }],
+        yAxis: [{ // Primary yAxis
+			gridLineWidth: 0,
+			tickInterval: 5,
+            minorGridLineWidth: 0,
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Minutes',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }],
+        tooltip: {
+            enabled:false
+        },
+        legend: {
+			enabled: false,
+            layout: 'vertical',
+            align: 'right',
+            x: 0,
+            verticalAlign: 'top',
+            y: 20,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+			itemStyle: {
+				color: '#000',
+				fontSize: '20px'
+			}
+        },
+		plotOptions: {
+			 series: {
+                pointWidth: 50
+            },
+            column: {
+				dataLabels: {
+                    enabled: true,
+					formatter: function() {
+						if (this.y === 0) {
+						  return '';
+						}else {
+							return this.y;
+						}
+					}
+                },
+				states: {
+					hover: {
+						color: '#008bcb'                                                           
+					}
+				},
+				
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function() {
+							
+                            draw2();
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Minutes per hour',
+            type: 'column',
+			animation: {
+                    duration: 2000
+                },
+            yAxis: 0,
+            data: [0, 3, 0, 5, 0, 10, 0, 12, 0, 10, 0, 12,0,10,0,5,0],
+            tooltip: {
+                valueSuffix: 'min'
+            },
+            marker: {
+                    enabled: false
+            }
+
+         }],
+	
+		});
+		chart2 = $('#container2').highcharts();
+		chart2.setTitle({text: "Your hourly activity for " + toDisplay });
+			
+    
+	}
+	
+	function refresh3(date) {
+
+		var selectedDate = new Date(date).toISOString();;
+		var startTime = new Date(selectedDate);
+		startTime =   new Date( startTime.getTime() + ( startTime.getTimezoneOffset() * 60000 ) );
+		
+		var toDisplay = startTime.toString().substring(0,10);
+		toDisplay = [toDisplay.toString().slice(0, 3), ",", toDisplay.toString().slice(3)].join('');
+		
+		
+		
+		
+		
+				$('#container3').highcharts({
+        chart: {
+            zoomType: 'xy',
+			events: {
+				click: function(event) {
+					draw3();
+				}
+			}  
+        },
+		colors: [
+                '#008bcb'
+        ],
+        title: {
+            text: 'Your daily activity by hour for date'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: [{
+			gridLineWidth: 0,
+            minorGridLineWidth: 0,
+            categories: ['0', ' ', '3', ' ', '6', '',
+                '9', '', 'N', '', '3', '','6','','9','','M'],
+			title: {
+                text: 'Time of Day',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+			}
+        }],
+        yAxis: [{ // Primary yAxis
+			gridLineWidth: 0,
+			tickInterval: 5,
+            minorGridLineWidth: 0,
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Minutes',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }],
+        tooltip: {
+            enabled:false
+        },
+        legend: {
+			enabled: false,
+            layout: 'vertical',
+            align: 'right',
+            x: 0,
+            verticalAlign: 'top',
+            y: 20,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+			itemStyle: {
+				color: '#000',
+				fontSize: '20px'
+			}
+        },
+		plotOptions: {
+			 series: {
+                pointWidth: 50
+            },
+            column: {
+				dataLabels: {
+                    enabled: true,
+					formatter: function() {
+						if (this.y === 0) {
+						  return '';
+						}else {
+							return this.y;
+						}
+					}
+                },
+				states: {
+					hover: {
+						color: '#008bcb'                                                           
+					}
+				},
+				
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function() {
+							
+                            draw3();
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Minutes per hour',
+            type: 'column',
+			animation: {
+                    duration: 2000
+                },
+            yAxis: 0,
+            data: [0, 3, 0, 5, 0, 10, 0, 12, 0, 10, 0, 12,0,10,0,5,0],
+            tooltip: {
+                valueSuffix: 'min'
+            },
+            marker: {
+                    enabled: false
+            }
+
+         }],
+	
+		});
+		chart3 = $('#container3').highcharts();
+		chart3.setTitle({text: "Your hourly activity for " + toDisplay });
+			
+    
+	}
+	
+	function draw2() {
+	//draw monthly graph
+	var goalData = [];
+	var activityData = [];
+	var datap = data.activityData;
+	//console.log(data);
+	for(var i=59;i<90;i++){
+		var todayGoal = [];
+		var todayActivity = [];
+		todayGoal.push(datap[i].date);
+		todayGoal.push(datap[i].goal);
+		goalData.push(todayGoal);
+		
+		todayActivity.push(datap[i].date);
+		todayActivity.push(datap[i].active);
+		activityData.push(todayActivity);
+		
+	}
+	$('#container2').highcharts({
+        chart: {
+            type: 'spline',
+        },
+		plotOptions: {
+            series: {
+                events: {
+                    legendItemClick: function() {
+                        return false;
+                    }    
+                },
+				animation: {
+                    duration: 2000
+                }
+            }
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+                month: '%e. %b',
+                year: '%b'
+            },
+            title: {
+                text: 'Date'
+            }
+        },
+        yAxis: {
+			max:80,
+			gridLineWidth: 0,
+			tickInterval: 5,
+            minorGridLineWidth: 0,
+            title: {
+                text: 'Minutes of Activity in a day (minutes)'
+            },
+            min: 0
+        },
+		legend: {
+            layout: 'horizontal',
+			margin: 20,
+            align: 'center',
+            x: 0,
+            verticalAlign: 'top',
+            y: 20,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+			itemStyle: {
+				color: '#000',
+				fontSize: '20px'
+			}
+        },
+        tooltip: {
+			formatter: function() {
+            var s = [];
+
+            $.each(this.points, function(i, point) {
+                s.push('<span style="color:#008BCB;font-weight:bold;">' + point.series.name +' : '+
+                    point.y  +'<span>' + '\n');
+				console.log(s)
+				
+				
+            });
+			
+
+            return s.join(' , ');
+        },
+        shared: true
+        },
+        series: [
+		{
+			type: 'area',
+			name: 'Daily Goal',
+			animation: {
+                    duration: 2000
+                },
+			color: '#d8d8d8',
+			fillOpacity: 0.3,
+			marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: false
+                        }
+                    }
+            },
+			point: {
+                    events: {
+                        
+						 legendItemClick: function () {
+							return false; // <== returning false will cancel the default action
+						}
+                    },
+					allowPointSelect: false,
+            },
+			data: goalData
+		},
+		{
+            name: 'Minutes active',
+	    cursor: 'pointer',
+	    point: {
+                    events: {
+                        click: function () {
+                           // alert('Date ' + Highcharts.dateFormat('%Y-%m-%d', this.x)+ ', index: ' + this.y);
+							refresh2(this.x);
+							
+                        }
+                    }
+            },
+            // Define the data points. All series have a dummy year
+            // of 1970/71 in order to be compared on the same x axis. Note
+            // that in JavaScript, months start at 0 for January, 1 for February etc.
+            data: activityData
+        }
+      ]
+    });
+}
+
+function draw3() {
+
+	//draw 3 months data
+	var goalData = [];
+	var activityData = [];
+	var datap = data.activityData;
+	//console.log(data);
+	for(var i=0;i<90;i++){
+		var todayGoal = [];
+		var todayActivity = [];
+		todayGoal.push(datap[i].date);
+		todayGoal.push(datap[i].goal);
+		goalData.push(todayGoal);
+		
+		todayActivity.push(datap[i].date);
+		todayActivity.push(datap[i].active);
+		activityData.push(todayActivity);
+		
+	}
+	$('#container3').highcharts({
+        chart: {
+            type: 'spline',
+        },
+		plotOptions: {
+            series: {
+                events: {
+                    legendItemClick: function() {
+                        return false;
+                    }    
+                },
+				animation: {
+                    duration: 3000
+                }
+            }
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+                month: '%e. %b',
+                year: '%b'
+            },
+            title: {
+                text: 'Date'
+            }
+        },
+        yAxis: {
+			max:80,
+			gridLineWidth: 0,
+			tickInterval: 5,
+            minorGridLineWidth: 0,
+            title: {
+                text: 'Minutes of Activity in a day (minutes)'
+            },
+            min: 0
+        },
+		legend: {
+            layout: 'horizontal',
+			margin: 20,
+            align: 'center',
+            x: 0,
+            verticalAlign: 'top',
+            y: 20,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+			itemStyle: {
+				color: '#000',
+				fontSize: '20px'
+			}
+			
+        },
+       tooltip: {
+			formatter: function() {
+            var s = [];
+
+            $.each(this.points, function(i, point) {
+                s.push('<span style="color:#008BCB;font-weight:bold;">' + point.series.name +' : '+
+                    point.y  +'<span>' + '\n');
+				console.log(s)
+				
+				
+            });
+			
+
+            return s.join(' , ');
+        },
+        shared: true
+        },
+
+        series: [{
+			type: 'area',
+			name: 'Goal',
+			color: '#d8d8d8',
+			animation: {
+                    duration: 2000
+                },
+			fillOpacity: 0.3,
+			marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: false
+                        }
+                    }
+            },
+			tooltip: {
+				formatter: function() {
+					var s = [];
+		
+					$.each(this.points, function(i, point) {
+						s.push('<span style="color:#008BCB;font-weight:bold;">' + point.series.name +' : '+
+							point.y  +'<span>' + '\n');
+						console.log(s)
+						
+						
+					});
+				
+					return s.join(' , ');
+				}
+			},
+			point: {
+                    events: {
+						 legendItemClick: function () {
+							return false; // <== returning false will cancel the default action
+						}
+                    },
+					allowPointSelect: false,
+            },
+			data: goalData
+		},
+		{
+            name: 'Minutes active',
+	    cursor: 'pointer',
+	    point: {
+                    events: {
+                        click: function () {
+                           // alert('Date ' + Highcharts.dateFormat('%Y-%m-%d', this.x)+ ', index: ' + this.y);
+							refresh3(this.x);
+							
+                        }
+                    }
+            },
+            // Define the data points. All series have a dummy year
+            // of 1970/71 in order to be compared on the same x axis. Note
+            // that in JavaScript, months start at 0 for January, 1 for February etc.
+            data: activityData
+        }
+		
+      ]
+    });
+}
+
+	
+	
+    $(function () {
+	
+
+	// draw all the 3 graphs on page load
+	draw1();
+	draw2();
+	draw3();
+ 
+
+// draw 3 graphs when the tab is selected so as to not lose the view
+ var pages = document.querySelector('core-pages');
+	console.log(pages);
+    var tabs = document.querySelector('paper-tabs');
+	console.log(tabs);
+    tabs.addEventListener('core-select', function() {
+      pages.selected = tabs.selected;
+	  draw1();
+	  draw2();
+	  draw3();
+    });
+	
+	
+	
+});
+
+   
+  </script>
+
+</body>
+</html>
